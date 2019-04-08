@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
 import Team from './Team';
 
@@ -25,15 +26,23 @@ class TeamsList extends Component {
   render() {
     const { teams, teamMediaLinks } = this.state;
     return (
-      <div>
+      <TeamGrid>
         {teams.map((team) => {
           const teamName = team.name.split(' ').join('-').toLowerCase();
           const logoUrl = teamMediaLinks[teamName]['team-logo'];
-          return <Team key={team.id} team={team} logoUrl={logoUrl} />;
+          const glowColor = teamMediaLinks[teamName]['team-color'];
+          return <Team key={team.id} team={team} logoUrl={logoUrl} glowColor={glowColor} />;
         })}
-      </div>
+      </TeamGrid>
     );
   }
 }
 
 export default TeamsList;
+
+const TeamGrid = styled.div`
+  display: grid;
+  padding: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-row-gap: 1rem;
+`;
