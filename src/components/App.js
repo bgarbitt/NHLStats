@@ -5,8 +5,9 @@ import {
   Switch,
   Link,
 } from 'react-router-dom';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+import '../media/css/App.css';
+import logo from '../media/images/logo.png';
 
 import TeamsList from './TeamsList';
 import TeamStats from './TeamStats';
@@ -16,7 +17,7 @@ const App = () => (
     <div className="App">
       <header className="App-header">
         <Link to="/">
-          <img src={logo} className="App-logo" alt="logo" />
+          <Logo src={logo} alt="logo" />
         </Link>
       </header>
       <Switch>
@@ -29,3 +30,10 @@ const App = () => (
 );
 
 export default App;
+
+const Logo = styled.img`
+  margin-top: 18px;
+  border-style: solid;
+  border: 1px;
+  box-shadow: 0 10px 10px #161b1d;
+`;

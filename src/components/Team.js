@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Overdrive from 'react-overdrive';
 
 /*
 Note: The reason I decomposed Team here was because we cannot set default props
@@ -11,12 +12,14 @@ Note: The reason I decomposed Team here was because we cannot set default props
 // Components
 
 const Team = ({ team, logoUrl, glowColor }) => (
-  <TeamImageLink name={team.name} id={team.id} logoUrl={logoUrl} glowColor={glowColor} />
+  <TeamImageLink name={team.name} logoUrl={logoUrl} glowColor={glowColor} />
 );
 
-const TeamImageLink = ({ name, id, logoUrl, glowColor }) => (
-  <Link to={`/team/${name.split(' ').join('-')}/${id}`}>
-    <TeamLogoImage src={logoUrl} alt={`${name}`} glowColor={glowColor} />
+const TeamImageLink = ({ name, logoUrl, glowColor }) => (
+  <Link to={`/team/${name.split(' ').join('-')}`}>
+    <Overdrive id={name}>
+      <TeamLogoImage src={logoUrl} alt={`${name}`} glowColor={glowColor} />
+    </Overdrive>
   </Link>
 );
 
@@ -25,17 +28,13 @@ export default Team;
 // Prop Types
 
 Team.propTypes = {
-  team: PropTypes.shape({
-    name: PropTypes.string,
-    id: PropTypes.number,
-  }).isRequired,
+  team: PropTypes.shape({ name: PropTypes.string }).isRequired,
   logoUrl: PropTypes.string,
   glowColor: PropTypes.string,
 };
 
 TeamImageLink.propTypes = {
   name: PropTypes.string,
-  id: PropTypes.number,
   logoUrl: PropTypes.string.isRequired,
   glowColor: PropTypes.string.isRequired,
 };
@@ -43,7 +42,7 @@ TeamImageLink.propTypes = {
 // Default Props
 
 Team.defaultProps = { logoUrl: 'notFound.png', glowColor: '#000000' };
-TeamImageLink.defaultProps = { name: 'name-not-found', id: -1 };
+TeamImageLink.defaultProps = { name: 'name-not-found' };
 
 export const TeamLogoImage = styled.img`
   object-fit: cover;
