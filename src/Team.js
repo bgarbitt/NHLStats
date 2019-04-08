@@ -8,9 +8,7 @@ Note: The reason I decomposed Team here was because we cannot set default props
       on a prop inside an object in props.
 */
 
-//
 // Components
-//
 
 const Team = ({ team, logoUrl, glowColor }) => (
   <TeamImageLink name={team.name} id={team.id} logoUrl={logoUrl} glowColor={glowColor} />
@@ -24,9 +22,7 @@ const TeamImageLink = ({ name, id, logoUrl, glowColor }) => (
 
 export default Team;
 
-//
 // Prop Types
-//
 
 Team.propTypes = {
   team: PropTypes.shape({
@@ -44,14 +40,12 @@ TeamImageLink.propTypes = {
   glowColor: PropTypes.string.isRequired,
 };
 
-//
 // Default Props
-//
 
 Team.defaultProps = { logoUrl: 'notFound.png', glowColor: '#000000' };
 TeamImageLink.defaultProps = { name: 'name-not-found', id: -1 };
 
-const TeamLogoImage = styled.img`
+export const TeamLogoImage = styled.img`
   object-fit: cover;
   width: 160px;
   height: 100px;

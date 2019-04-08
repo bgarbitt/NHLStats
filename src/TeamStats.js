@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-//
+import { TeamLogoImage } from './Team';
+
 // Components
-//
 
 const TeamStats = ({ match }) => <TeamStatsApiCall name={match.params.name} id={match.params.id} />;
 
 class TeamStatsApiCall extends Component {
-  state = { teamStats: { venue: {} } }
+  state = { teamStats: { venue: {} }, teamAwsInfo: {} }
 
   async componentDidMount() {
     const { name, id } = this.props;
@@ -16,8 +16,10 @@ class TeamStatsApiCall extends Component {
       let nhlTeamId = -1;
       if (id === '-1') {
         const awsApiIdUrl = `https://4bd4fqbdl1.execute-api.us-east-1.amazonaws.com/demo-1/id/?name=${name.toLowerCase()}`;
-        const awsApiCallResults = await fetch(awsApiIdUrl);
-        nhlTeamId = await awsApiCallResults.json();
+        const teamAwsInfo = await (await fetch(awsApiIdUrl)).json();
+
+        this.setState({ teamAwsInfo });
+        nhlTeamId = this.state.teamAwsInfo['team-id']; // eslint-disable-line
       } else {
         nhlTeamId = id;
       }
@@ -32,9 +34,12 @@ class TeamStatsApiCall extends Component {
   }
 
   render() {
-    const { teamStats } = this.state;
+    const { teamStats, teamAwsInfo } = this.state;
+    const logoUrl = teamAwsInfo['team-logo'];
+    const glowColor = teamAwsInfo['team-color'];
     return (
       <div>
+        <TeamLogoImage src={logoUrl} alt={`${teamStats.name}`} glowColor={glowColor} />
         <h1>{teamStats.name}</h1>
         <h3>{teamStats.locationName}</h3>
         <p>{teamStats.venue.name}</p>
