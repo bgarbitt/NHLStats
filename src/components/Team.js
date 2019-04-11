@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Overdrive from 'react-overdrive';
 
+import notFound from '../media/images/notFound.png';
+
 /*
 Note: The reason I decomposed Team here was because we cannot set default props
       on a prop inside an object in props.
@@ -16,7 +18,7 @@ const Team = ({ team, logoUrl, glowColor }) => (
 );
 
 const TeamImageLink = ({ name, logoUrl, glowColor }) => (
-  <Link to={`/team/${name.split(' ').join('-')}`}>
+  <Link to={`/team/${name.split(' ').join('-').toLowerCase()}`}>
     <Overdrive id={name}>
       <TeamLogoImage src={logoUrl} alt={`${name}`} glowColor={glowColor} />
     </Overdrive>
@@ -41,7 +43,7 @@ TeamImageLink.propTypes = {
 
 // Default Props
 
-Team.defaultProps = { logoUrl: 'notFound.png', glowColor: '#000000' };
+Team.defaultProps = { logoUrl: { notFound }, glowColor: '#000000' };
 TeamImageLink.defaultProps = { name: 'name-not-found' };
 
 export const TeamLogoImage = styled.img`

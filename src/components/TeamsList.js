@@ -31,7 +31,11 @@ class TeamsList extends Component {
           const teamName = team.name.split(' ').join('-').toLowerCase();
           const logoUrl = teamMediaLinks[teamName]['team-logo'];
           const glowColor = teamMediaLinks[teamName]['team-color'];
-          return <Team key={team.id} team={team} logoUrl={logoUrl} glowColor={glowColor} />;
+          return (
+            <div key={team.id}>
+              <Team team={team} logoUrl={logoUrl} glowColor={glowColor} />
+            </div>
+          );
         })}
       </TeamGrid>
     );
@@ -41,8 +45,11 @@ class TeamsList extends Component {
 export default TeamsList;
 
 const TeamGrid = styled.div`
-  display: grid;
-  padding: 1rem;
-  grid-template-columns: repeat(6, 1fr);
-  grid-row-gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  > div {
+    flex: 0 0 calc(16.66% - 20px);
+    margin: 5px 10px 5px 10px;
+  }
 `;
